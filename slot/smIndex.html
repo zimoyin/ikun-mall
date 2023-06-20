@@ -1,0 +1,128 @@
+<slot>
+    <div class="layui-panel" style="margin-bottom: 10px;background-color:rgb(234,232,235);">
+        <div style="width: 98%;margin-top: 10px">
+            <div class="layui-form-item" style="width: 75%;margin: 0 auto;">
+                <div class="layui-input-group">
+                    <label style="border: red solid 2px">
+                        <input type="text" placeholder="搜索宝贝"  class="layui-input" id="sm-search-index">
+                    </label>
+                    <div class="layui-input-split layui-input-suffix" onclick="search()"
+                         style="cursor: pointer;background-color:red;width: 80px;border: red solid 4px">
+                        <i class="layui-icon layui-icon-search" style="color: #f6f6f6;font-size: large"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="results">
+
+    </div>
+    <div class="sm-Index-content" style="height: 500px;" id="sm-Index-content">
+        <div class="layui-carousel" id="ID2">
+            <div carousel-item>
+                <div><a href="javascript:" onclick="toRouterForShow('q3')">
+                    <img src="./../img/222/2bdda2c9b31be65f.jpg">
+                </a>
+                </div>
+                <div><a href="javascript:" onclick="toRouterForShow('q4')"> <img
+                        src="./../img/222/498058bbc3a3d4b0.jpg.avif"></a></div>
+                <div><a href="javascript:" onclick="toRouterForShow('q4')"><img src="./../img/222/q.jpg"></a></div>
+            </div>
+        </div>
+
+        <div style="height: 500px;">
+            <a href="javascript:" onclick="toRouterForShow('q1')">
+                <img src="./../img/222/q%20(1).jpg" class="smIndexRoot-img" style="height: 240px">
+            </a>
+            <a href="javascript:" onclick="toRouterForShow('q2')">
+                <img src="./../img/222/q%20(2).jpg" class="smIndexRoot-img" style="height: 220px">
+            </a>
+        </div>
+        <div style="border: #9f9f9f solid 1px;height: 460px">
+            <a href="javascript:"><img src="./../img/222/1.jpg" style="height: 460px"></a>
+        </div>
+    </div>
+    <hr class="layui-border-cyan">
+    <div>
+        <div style="display: flex;flex-direction: row;align-items: center;justify-content: center;">
+            <span style="font-size: 30px;margin-right: 10px">
+                猜你喜欢
+            </span>
+            <img class="rh-logo" src="./../img/cinixihuan.png" title="" style="">
+        </div>
+
+        <slot name="smBasketball"></slot>
+    </div>
+</slot>
+
+<script>
+  layui.use(function () {
+    let carousel = layui.carousel
+    // 渲染 - 图片轮播
+    carousel.render({
+      elem: '#ID2',
+      width: '720px',
+      height: '94%',
+      interval: 3000,
+    })
+  })
+  document.getElementById("sm-search-index").onkeydown = function (event) {
+    let e = event || window.event;
+    if (e && e.keyCode === 13) { //回车键的键值为13
+        search()
+    }
+  };
+
+  function search(){
+    let smIndexContent = document.getElementById('sm-Index-content')
+    let resultsDom = document.getElementById('results')
+    let keys = document.getElementById('sm-search-index').value
+
+    results = searchItems(keys)
+    if (results.length <=0){
+      layer.msg('共查找到 '+results.length+' 条')
+      return
+    }
+
+    if (keys === undefined || keys === null || keys.length <=0){
+      if (!smIndexContent.classList.contains("none")) {
+        layer.msg('搜索框不能为空')
+
+      }else {
+        smIndexContent.classList.remove("none")
+        resultsDom.innerHTML = ''
+      }
+      return
+    }
+
+
+    layer.msg('共查找到 '+results.length+' 条')
+    console.log(results)
+    smIndexContent.classList.add('none')
+
+    resultsDom.innerHTML='<slot name="smResults"></slot>'
+    load('smResults',()=>{})
+
+  }
+</script>
+
+<style>
+    .sm-Index-content {
+        width: 94%;
+        height: 94%;
+        display: flex;
+        padding: 10px;
+    }
+
+    .smIndexRoot-img {
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 8px;
+        width: 250px;
+    }
+
+    #ID2 {
+        /*padding: 10px;*/
+        /*margin: 10px;*/
+    }
+</style>

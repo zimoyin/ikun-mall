@@ -1,0 +1,6 @@
+<component name="CopyrightManager">
+  <copyright>
+    <option name="notice" value="Copyright (c) &amp;#36;originalComment.match(&quot;Copyright \(c\) (\d+)&quot;, 1, &quot;-&quot;, &quot;&amp;#36;today.year&quot;)&amp;#36;today.year.  zimo&#10;This project is licensed under the GNU Affero General Public License, version 3 (GNU AGPLv3).&#10;Copyright Owner: zimo&#10;                                                                                                &#10; License terms and conditions can be found at the following link:&#10;https://www.gnu.org/licenses/agpl-3.0.html&#10;                                                                                                &#10;Unless required by applicable law or agreed to in writing, this project is distributed on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.&#10;                                                                                                &#10;" />
+    <option name="myName" value="github-zimo" />
+  </copyright>
+</component>

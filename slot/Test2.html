@@ -1,0 +1,18 @@
+<slot>
+    <h2 id="abc">Hello, Test2!</h2>
+</slot>
+
+<script>
+  console.log(1)
+  dom.Test2[0].getElementById('abc').innerHTML = 'Hello, Test2 for js'
+  // console.log(dom.Test2.length)
+  for (let test2Key in dom.Test2) {
+    dom.Test2[test2Key].getElementById('abc').innerHTML = 'Hello, Test2 for js'
+  }
+</script>
+
+<style>
+    #abc {
+        color: green;
+    }
+</style>

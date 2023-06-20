@@ -1,0 +1,93 @@
+<slot>
+    <main class="sm-flex-root" id="sm-results">
+        <div class="result-pan result-flex layui-panel none">
+            <div>
+                <img src="" class="result-img">
+            </div>
+            <div>
+                <h1 class="result-title"></h1>
+                <p class="result-content"></p>
+                <div class="result-flex" style="align-items: center; margin-top: 20px">
+                    <p>RMB: </p>
+                    <p style="color: red;font-size: large;" class="result-rmb"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+</slot>
+
+<script>
+  function addResultsTask (data) {
+    //  parseDom 解析一个字符串为dom
+    let order = parseDom(document.getElementsByClassName('result-pan')[0].outerHTML)
+      .getElementsByClassName('result-pan')[0]
+    // 为要添加的商品添加索引
+    let index = (document.getElementsByClassName('result-pan').length + 1)
+
+    //订单设置class
+    order.classList.remove('none')
+    order.classList.add('result-for')
+    order.id = ('result-for-' + index)
+
+    //设置商品具体内容
+    order.getElementsByClassName('result-img')[0].src = data.getImgPath()
+    order.getElementsByClassName('result-title')[0].innerText = data.title
+    order.getElementsByClassName('result-rmb')[0].innerText = data.rmb + '$'
+    order.getElementsByClassName('result-content')[0].innerText = data.content
+
+    //渲染dom
+    document.getElementById('sm-results').appendChild(order)
+
+    //添加单机事件
+    document.getElementById('result-for-' + index).onclick = function () {
+      toRouterForShow(
+        'rand',
+        data.title,
+        data.content,
+        data.getImgPath(),
+        data.rmb,
+      )
+    }
+  }
+
+  // 遍历并乱序输出
+  shuffleArray(Object.keys(results)).forEach(key => {
+    addResultsTask(results[key]);
+  });
+</script>
+
+<style>
+    .sm-flex-root {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 50px;
+        padding-top: 20px;
+        padding-right: 60px;
+    }
+
+    .result-flex {
+        display: flex;
+
+    }
+
+    .result-pan {
+        cursor: pointer; /*鼠标变小手*/
+        margin: 5px;
+        width: 500px;
+        height: 200px;
+        /*box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1);*/
+    }
+
+    .result-pan:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .result-img {
+        margin-right: 10px;
+        /*width: 50px;*/
+        height: 200px;
+    }
+</style>

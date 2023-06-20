@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>爱坤商城-用爱成就鸽鸽❤</title>
+    <script src="js/core/NanoModules.js"></script>
+    <script src="slot/out.js"></script>
+    <script src="./js/smData.js"></script>
+    <script src="js/mallData.js"></script>
+    <script src="js/tools.js"></script>
+    <link href="./css/libs/layui/css/layui.css" rel="stylesheet">
+    <link rel="shortcut icon" href="img/favicon.png">
+    <script src="./css/libs/layui/layui.js"></script>
+
+    <style>
+        .none {
+            display: none !important;
+        }
+
+
+        #tc {
+            display: none;
+            position: absolute;
+            z-index: 11;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(112, 112, 107, 0.9);
+        }
+
+        .flex {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+
+<div id="tc">
+    <slot name="login"></slot>
+</div>
+
+<header>
+    <slot name="bar" id="bar"></slot>
+    <ul class="layui-nav" lay-bar="disabled">
+        <li class="layui-nav-item"><a href="javascript:toRoute('/')" id="time-hi" onclick="loginForms()">123</a></li>
+        <li class="layui-nav-item"><a href="#"></a></li>
+        <li class="layui-nav-item"><a href="javascript:toRoute('/index')">主页</a></li>
+        <li class="layui-nav-item"><a href="javascript:toRoute('/car')">购物车</a></li>
+        <li class="layui-nav-item"><a href="javascript:toRoute('/order')">我的订单</a></li>
+        <!--<li class="layui-nav-item"><a href="#">task: 具体的商品页面，使用json来动态填充数据</a></li>-->
+        <li class="layui-nav-item">
+            <a href="javascript:">排行榜</a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:toRoute('/hot')">热卖榜</a></dd>
+                <dd><a href="javascript:toRoute('/rank')">排行榜</a></dd>
+            </dl>
+        <li class="layui-nav-item"><a href="#/register">入住平台</a></li>
+    </ul>
+</header>
+<main>
+    <!--路由出口-->
+    <router></router>
+
+</main>
+<footer></footer>
+</body>
+
+<script>
+  (function () {
+    // 非服务器设置为true，使用编译结果运行
+    jsonSlot = true
+
+    if (window.location.protocol === 'file:') {
+      if (!jsonSlot) {
+        layer.msg('Error: 网站未部署在服务器，且未加载静态编译文件')
+      }
+    }
+
+    window.user = {}
+    let userName = localStorage.getItem('userName')
+    if (userName !== undefined && userName !== null) {
+      window.user = {
+        name: userName,
+        password: '************',
+      }
+    }
+  }())
+
+
+
+  function initRouter () {
+    addRouter('/', 'show')
+    addRouter('/index', 'show')
+    addRouter('/car', 'ShoppingCart')
+    addRouter('/order', 'order')
+    addRouter('/register', 'register')
+    addRouter('/hot', 'hot')
+    addRouter('/rank', 'rank')
+    addRouter('/404', '404')
+  }
+
+  initRouter()
+
+  let va = false
+  const loginForms = () => {
+    if (va) document.getElementById('tc').style.display = 'none'
+    else document.getElementById('tc').style.display = 'block'
+    va = !va
+  }
+  updateWords()
+</script>
+</html>

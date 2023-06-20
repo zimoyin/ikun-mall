@@ -1,0 +1,33 @@
+<slot>
+    <div class="layui-carousel" id="ID-carousel-demo-image" width="123px">
+        <div carousel-item>
+            <div><img src="./../img/2.jpg" class="bar-img"></div>
+            <div><img src="./../img/1.jpg" class="bar-img"></div>
+            <!--<div><img src="./../img/3.jpg" class="bar-img"></div>-->
+        </div>
+    </div>
+</slot>
+
+<script>
+  layui.use(function () {
+    var carousel = layui.carousel
+    // 渲染 - 图片轮播
+    carousel.render({
+      elem: '#ID-carousel-demo-image',
+      width: '100vh',
+      height: '97px',
+      interval: 3000,
+    })
+  })
+
+</script>
+
+<style>
+    .bar-img{
+        width: 100%;
+        /*height: 100%;*/
+    }
+    #ID-carousel-demo-image{
+        width: 100% !important;
+    }
+</style>

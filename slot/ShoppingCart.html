@@ -1,0 +1,153 @@
+<slot>
+    <div class="sc-flex" id="order-root">
+        <div class="layui-panel" style="width: 80vw;height: 80px;display: flex;align-items: center;margin-top: 10px">
+            <h2 style="margin-left: 20px">购物车</h2>
+            <div style="right: 20px;position: absolute">
+                <button class="layui-btn layui-btn-primary" onclick="clearScFor()">清空</button>
+                <button class="layui-btn layui-btn-danger" onclick="clearScFor()">购买所有</button>
+            </div>
+        </div>
+
+        <div class=""
+             style="color: #9f9f9f;font-size:35px;margin-top: 200px;position: absolute;z-index: 0;border: none">
+            <p>空空如也QAQ</p>
+        </div>
+
+        <div class="layui-card dingdan order-sim none" style="z-index: 2">
+            <div class="layui-card-header order-sim-header flex">
+                <div>
+                    <p style="color: rgb(170,170,185);" class="order-date">订购时间: 2022.02.02 02:03:02.222</p>
+                </div>
+                <div style="margin-left: 200px">
+                    <p style="color: rgb(170,170,185);" class="order-id">订单ID: 8848</p>
+                </div>
+            </div>
+            <div class="layui-card-body order-sim-body flex"
+                 style="justify-content: space-between;    align-items: center;">
+                <div>
+                    <img class="sc-img" src="../img/222/q5.jpg">
+                </div>
+                <h3 class="sc-title">标题</h3>
+                <div style="min-width: 100px;max-width: 150px;width: 120px">
+                    <b class="sc-rmb">$金钱x购买数量</b>
+
+                    <br>
+                    <b class="sc-count" style="color: red">总金额: 123</b>
+                </div>
+                <button class="layui-btn layui-btn-danger sc-button-buy">立即购买</button>
+            </div>
+        </div>
+    </div>
+</slot>
+
+<script>
+
+  function clearScFor () {
+    let elements = document.getElementsByClassName('sc-for')
+    // 从后向前遍历集合，逐个删除元素
+    for (let i = elements.length - 1; i >= 0; i--) {
+      const element = elements[i]
+      const id = element.getElementsByClassName('order-id')[0].innerText
+      // element.parentNode.removeChild(element);
+      for (let smCountKey in smCount) {
+        if (smCount[smCountKey].id === parseInt(id)) {
+          smResultCount[smCountKey] = smCount[smCountKey]
+        }
+      }
+      element.remove()
+      smCount = {}
+    }
+  }
+
+  function addOrder (data) {
+    //  parseDom 解析一个字符串为dom
+    let order = parseDom(document.getElementsByClassName('order-sim')[0].outerHTML)
+      .getElementsByClassName('order-sim')[0]
+    // 为要添加的订单添加索引
+    let index = (document.getElementsByClassName('sc-for').length + 1)
+
+    //订单设置class
+    order.classList.remove('none')
+    order.classList.add('sc-for')
+    order.id = ('sc-for-' + index)
+
+    //设置订单具体内容
+    order.getElementsByClassName('sc-img')[0].src = data.detail.getImgPath()
+    order.getElementsByClassName('sc-title')[0].innerText = data.detail.title
+    order.getElementsByClassName('order-id')[0].innerText = '订单ID: ' + data.id
+    order.getElementsByClassName('order-date')[0].innerText = '订购时间: ' + getCurrentDateTime()
+    order.getElementsByClassName('sc-rmb')[0].innerText = '$' + data.detail.rmb + ' x ' + data.number
+    order.getElementsByClassName('sc-count')[0].innerText = '总金额: ' + (data.detail.rmb * data.number).toFixed(2)
+    order.getElementsByClassName('sc-button-buy')[0].id = ('sc-button-buy-' + index)
+
+    //渲染dom
+    // document.getElementById('order-root').innerHTML += order.outerHTML
+    document.getElementById('order-root').appendChild(order)
+
+    //添加单机事件
+    document.getElementById('sc-button-buy-' + index).onclick = function () {
+      if (window.user.name === null || window.user.name === undefined) {
+        layer.msg('请登录！')
+        return
+      }
+      const element = document.getElementById('sc-for-' + index)
+      const id = element.getElementsByClassName('order-id')[0].innerText
+      for (let smCountKey in smCount) {
+        if (smCount[smCountKey].id === parseInt(id.substring(id.indexOf(': ')+2))) {
+          smResultCount[smCountKey] = smCount[smCountKey]
+          delete smCount[smCountKey]
+        }
+      }
+      element.remove()
+    }
+  }
+
+  for (let smCKey in smCount) {
+    console.log('购物车添加订单: ' + smCKey)
+    addOrder(smCount[smCKey])
+  }
+
+</script>
+
+<style>
+
+    .sc-flex {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .sc-flex > * {
+        /*border: rgb(245,245,245) solid 2px;*/
+        border: rgb(211, 210, 210) solid 1px;
+    }
+
+    .dingdan {
+        width: 80vw;
+        /*height: 20vh;*/
+        min-height: 150px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .sc-img {
+        width: 80px;
+        height: 80px;
+        margin-right: 20px;
+    }
+
+    .sc-title {
+        max-height: 80px;
+        height: 30px;
+        max-width: 500px;
+        width: 500px;
+        /*border: #1e9fff solid 1px;*/
+        border-right: #9f9f9f solid 1px;
+        word-break: break-all;
+        word-wrap: break-word;
+        text-overflow: ellipsis;
+        margin-right: 15px;
+    }
+</style>

@@ -1,0 +1,100 @@
+<slot>
+    <div id="register-root">
+        <div class="reg-panel">
+            <form class="layui-form">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">用户名</label>
+                        <div class="layui-input-inline layui-input-wrap">
+                            <input type="tel" name="phone" lay-verify="required|phone"  placeholder="请输入用户名" autocomplete="off" lay-affix="clear" class="layui-input rg-input demo-phone">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">密码</label>
+                        <div class="layui-input-inline layui-input-wrap">
+                            <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off"
+                                   placeholder="请填写密码" lay-affix="clear" class="layui-input demo-phone rg-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">验证手机号</label>
+                        <div class="layui-input-inline layui-input-wrap">
+                            <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off"
+                                   placeholder="请填写手机号" lay-affix="clear" class="layui-input demo-phone rg-input">
+                        </div>
+                        <div class="layui-form-mid" style="padding: 0!important;">
+                            <button type="button" class="layui-btn layui-btn-primary" lay-on="get-vercode" onclick="layer.msg('验证码已发送')">获取验证码
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">验证码</label>
+                    <div class="layui-input-inline layui-input-wrap">
+                        <input type="text" name="vercode" lay-verify="required" placeholder="请输入验证码" autocomplete="off" lay-affix="clear"
+                               class="layui-input rg-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">验证邮箱</label>
+                        <div class="layui-input-inline">
+                            <input type="text" placeholder="请输入邮箱" name="email" lay-verify="email" autocomplete="off" class="layui-input rg-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button type="submit" class="layui-btn" onclick="toRoute('/index')">立即提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</slot>
+
+<script>
+
+</script>
+
+<style>
+    .reg-panel {
+        display: flex;
+        width: 50vw;
+        padding: 20px;
+        margin-bottom: 200px;
+        background-color: rgba(77, 57, 57, 0.4);
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: center;
+        color: #e0dddd;
+    }
+
+    #register-root {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        /*background-color: #a49f9f;*/
+        background: url("./img/login-bg.jpg")  no-repeat center center ;
+        top: 0;
+        overflow-x: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .rg-input{
+        background-color: transparent;
+        border-top: none;
+        border-right: none;
+        border-left: none;
+        color: #e0dddd;
+    }
+</style>

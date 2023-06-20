@@ -1,0 +1,167 @@
+<slot>
+    <div id="menu-content">
+        <div class="layui-panel" style="width: 260px; margin: 16px;">
+            <ul class="layui-menu" id="demo-menu">
+                <li lay-options="{id: 'smIndex'}">
+                    <div class="layui-menu-body-title"><a href="javascript:;">主页</a></div>
+                </li>
+                <li lay-options="{id: 'smBasketball'}">
+                    <div class="layui-menu-body-title"><a href="javascript:;">篮球</a></div>
+                </li>
+                <li lay-options="{id: 'smRompers'}">
+                    <div class="layui-menu-body-title"><a href="javascript:;">背带裤</a></div>
+                </li>
+                <li class="layui-menu-item-parent" lay-options="{type: 'parent'}">
+                    <div class="layui-menu-body-title">
+                        分类
+                        <i class="layui-icon layui-icon-right"></i>
+                    </div>
+                    <div class="layui-panel layui-menu-body-panel">
+                        <ul>
+                            <li class="layui-menu-item-parent" lay-options="{type: 'parent'}">
+                                <div class="layui-menu-body-title">
+                                    服装
+                                    <i class="layui-icon layui-icon-right"></i>
+                                </div>
+                                <div class="layui-panel layui-menu-body-panel">
+                                    <ul>
+                                        <li lay-options="{id: '404'}">
+                                            <div class="layui-menu-body-title">女装</div>
+                                        </li>
+                                        <li lay-options="{id: '404'}">
+                                            <div class="layui-menu-body-title">男装</div>
+                                        </li>
+                                        <li lay-options="{id: '404'}">
+                                            <div class="layui-menu-body-title">童装</div>
+                                        </li>
+                                        <li lay-options="{id: '404'}">
+                                            <div class="layui-menu-body-title">坤装</div>
+                                        </li>
+                                        <li lay-options="{id: '404'}">
+                                            <div class="layui-menu-body-title" style="font-size: small;color: #9f9f9f">更多...</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <!--子-->
+                            <li class="layui-menu-item-parent" lay-options="{type: 'parent'}">
+                                <div class="layui-menu-body-title">
+                                    电子产品
+                                    <i class="layui-icon layui-icon-right"></i>
+                                </div>
+                                <div class="layui-panel layui-menu-body-panel">
+                                    <ul>
+                                        <li lay-options="{id: '404'}">
+                                            <div class="layui-menu-body-title">手机</div>
+                                        </li>
+                                        <li lay-options="{id: '404'}">
+                                            <div class="layui-menu-body-title">耳机</div>
+                                        </li>
+                                        <li lay-options="{id: '404'}">
+                                            <div class="layui-menu-body-title">笔记本</div>
+                                        </li>
+                                        <li lay-options="{id: '404'}">
+                                            <div class="layui-menu-body-title" style="font-size: small;color: #9f9f9f">更多...</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <!--子-->
+                            <li class="layui-menu-item-parent" lay-options="{type: 'parent'}">
+                                <div class="layui-menu-body-title">
+                                    鞋/时尚女鞋
+                                    <i class="layui-icon layui-icon-right"></i>
+                                </div>
+                                <div class="layui-panel layui-menu-body-panel">
+                                    <ul>
+                                        <li lay-options="{id: '404'}">
+                                            <div class="layui-menu-body-title">雪地靴</div>
+                                        </li>
+                                        <li lay-options="{id: '404'}">
+                                            <div class="layui-menu-body-title">松糕鞋</div>
+                                        </li>
+                                        <li lay-options="{id: '404'}">
+                                            <div class="layui-menu-body-title">马丁靴</div>
+                                        </li>
+                                        <li lay-options="{id: '404'}">
+                                            <div class="layui-menu-body-title">帆布鞋</div>
+                                        </li>
+                                        <li lay-options="{id: '404'}">
+                                            <div class="layui-menu-body-title">雨靴</div>
+                                        </li>
+                                        <li lay-options="{id: '404'}">
+                                            <div class="layui-menu-body-title" style="font-size: small;color: #9f9f9f">更多...</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <!--  子 END  -->
+                        </ul>
+                    </div>
+                </li>
+                <li lay-options="{id: '404'}">
+                    <div class="layui-menu-body-title" style="font-size: medium;color: #7a7a78">更多...</div>
+                </li>
+            </ul>
+        </div>
+        <div class="layui-panel" id="router-show">
+            <slot name="smIndex"></slot>
+        </div>
+        <!--<div class="layui-panel" style="position: fixed; width: 50px;height: 50px;right: 80px;bottom: 150px">-->
+        <!--    <div>顶部</div>-->
+        <!--</div>-->
+    </div>
+</slot>
+
+<script>
+
+  layui.use(function () {
+    let dropdown = layui.dropdown
+    let layer = layui.layer
+    let util = layui.util
+    // 菜单点击事件
+    dropdown.on('click(demo-menu)', function (options) {
+      // 显示 - 仅用于演示
+      if (options.id === '404') {
+        console.log(this, options)
+        layer.msg(util.escape(JSON.stringify(options)))
+      }
+
+      console.log(options.id)
+      document.getElementById('router-show').innerHTML = '<slot name = \'' + options.id + '\'' + '>'
+      load(options.id, () => {})
+    })
+  })
+
+  function toRouterForShow (name, title, content, imgPath, rmb) {
+    smName = name
+    if (rmb === null || rmb === undefined) {
+      rmb = (Math.random() * (100 + 9) - 9).toFixed(2)
+    }
+    sm.rand = {
+      title: title,
+      content: content,
+      imgPathDev: imgPath,
+      imgPath: imgPath,
+      getImgPath: function () {return imgPath},
+      rmb: rmb,
+      stock: (Math.random() * 100).toFixed(0),
+    }
+    document.getElementById('router-show').innerHTML = '<slot name = "smSt">'
+    load('smSt', () => {})
+  }
+</script>
+
+<style>
+    #menu-content {
+        display: flex;
+    }
+
+    #router-show {
+        margin: 20px;
+        width: 100%;
+        /*height: 73vh;*/
+        min-height: 73vh;
+        overflow-x: auto;
+    }
+</style>

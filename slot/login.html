@@ -1,0 +1,59 @@
+<slot>
+    <div id="login-panel-super">
+        <div class="layui-panel" id="login-panel">
+            <div class="layui-input-group">
+                <div class="layui-input-split layui-input-prefix"
+                ">
+                账号
+            </div>
+            <input type="text" placeholder="请输入用户名或账号" class="layui-input" id="login-user">
+        </div>
+        <div class="layui-input-group">
+            <div class="layui-input-split layui-input-prefix">
+                密码
+            </div>
+            <input type="password" lay-affix="eye" placeholder="请输入密码" class="layui-input" id="login-password">
+        </div>
+
+        <div class="login-button-group">
+            <button type="button" onclick="login()" class="layui-btn">登录</button>
+            <button type="button" onclick="localStorage.removeItem('userName');location.reload();" class="layui-btn" style="margin-right: 33px">注销</button>
+        </div>
+    </div>
+</slot>
+
+<script>
+
+</script>
+
+<style>
+    .login-button-group {
+        padding: 10px;
+        display: flex;
+        flex-direction: row-reverse;
+        width: 100%;
+        height: 100%;
+    }
+
+    .layui-input-group {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    #login-panel {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 500px;
+        height: 300px;
+        padding: 50px 30px;
+    }
+
+    #login-panel-super {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
